@@ -8,18 +8,20 @@ const Header = () => {
       {/*  */}
       <div className="flex items-center">
         <div className="flex w-16 h-16 mx-10 items-center justify-center">
-          <Image
-            src="/logo.png"
-            alt="Omoide Note Logo"
-            width={60}
-            height={60}
-            className="rounded-full"
-          />
+          <Link href={"/"}>
+            <Image
+              src="/logo.png"
+              alt="Omoide Note Logo"
+              width={60}
+              height={60}
+              className="rounded-full"
+            />
+          </Link> 
         </div>
         <nav>
           <ul className="flex gap-10 text-lg">
             <li>
-              <Link href="/" className="text-gray-700">
+              <Link href="/home" className="text-gray-700">
                 ホーム
               </Link>
             </li>
