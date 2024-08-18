@@ -3,7 +3,7 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { auth } from "../../firebaseConfig";
+import { auth } from "../../../firebaseConfig";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
