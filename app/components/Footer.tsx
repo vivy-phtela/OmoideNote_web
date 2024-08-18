@@ -6,11 +6,11 @@ import { useAppContext } from "@/context/AppContext";
 
 const Footer = () => {
   const { user } = useAppContext();
-  console.log("user", user);
+
   return (
-    <footer className="flex w-full h-96 bg-black justify-evenly items-center text-white">
+    <footer className="flex w-full h-60 bg-black justify-evenly items-center text-white">
       {!user && (
-        // ログインしている場合はユーザー情報を表示
+        // ログインしていない場合はユーザー情報を表示
         <div className="w-2/5 h-52 p-3 border border-slate-500">
           <div className="w-5/6 text-center text-xl leading-10 mx-auto">
             <h2>新規会員登録またはログイン</h2>
