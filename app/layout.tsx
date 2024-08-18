@@ -1,14 +1,12 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-
-const inter = Inter({ subsets: ["latin"] });
+import { AppProvider } from "@/context/AppContext";
 
 export const metadata: Metadata = {
   title: "OmoideNote",
-  description: "AITOTO PROJECT",
+  description: "CREATED BY AITOTO PROJECT",
 };
 
 export default function RootLayout({
@@ -18,10 +16,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
-      <body className={inter.className}>
-        <Header />
-        {children}
-        <Footer />
+      <body>
+        <AppProvider>
+          <Header />
+          {children}
+          <Footer />
+        </AppProvider>
       </body>
     </html>
   );
