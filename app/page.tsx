@@ -8,22 +8,20 @@ const HomePage = () => {
         <Image
           src="/main-home1.jpg"
           alt="main-home1-background"
-          width={200}
-          height={100}
-          style={{objectFit: 'cover'}}
+          layout="fill"
+          objectFit="cover"
           className="w-full h-full"
         />
       </div>
-      <div className="relative bg-slate-400 w-full h-screen">
+      {/* <div className="relative bg-slate-400 w-full h-screen">
         <Image
           src="/main-home2.jpg"
           alt="main-home2-background"
-          width={200}
-          height={100}
-          style={{objectFit: 'cover'}}
+          layout="fill"
+          objectFit="cover"
           className="w-full h-full"
         />
-      </div>
+      </div> */}
     </div>
   );
 };
