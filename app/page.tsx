@@ -13,7 +13,7 @@ const HomePage = () => {
           className="w-full h-full"
         />
       </div>
-      <div className="relative bg-slate-400 w-full h-screen">
+      {/* <div className="relative bg-slate-400 w-full h-screen">
         <Image
           src="/main-home2.jpg"
           alt="main-home2-background"
@@ -21,7 +21,7 @@ const HomePage = () => {
           objectFit="cover"
           className="w-full h-full"
         />
-      </div>
+      </div> */}
     </div>
   );
 };
