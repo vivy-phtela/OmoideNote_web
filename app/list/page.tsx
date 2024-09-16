@@ -9,7 +9,7 @@ import Image from "next/image";
 type Registration = {
   id: string;
   title: string;
-  imageUrl: string;
+  imageURL: string;
   date: Timestamp;
   memo: string;
 };
@@ -70,7 +70,7 @@ const Listpage = () => {
           >
             <div className="w-60 h-60 relative overflow-hidden bg-gray-200">
               <Image
-                src={item.imageUrl}
+                src={item.imageURL}
                 alt={item.title}
                 fill
                 className="object-cover"

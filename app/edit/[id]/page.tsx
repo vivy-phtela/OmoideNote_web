@@ -27,7 +27,7 @@ const EditPage = () => {
   const [title, setTitle] = useState("");
   const [bio, setBio] = useState("");
   const [date, setDate] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
+  const [imageURL, setImageUrl] = useState("");
   const [newImage, setNewImage] = useState<File | null>(null); // 新しい画像の状態
 
   useEffect(() => {
@@ -42,7 +42,7 @@ const EditPage = () => {
           setTitle(data.title || "");
           setBio(data.bio || "");
           setDate(data.date?.toDate().toISOString().substr(0, 10) || ""); // タイムスタンプをISO形式の日付文字列に変換
-          setImageUrl(data.imageUrl || "");
+          setImageUrl(data.imageURL || "");
         } else {
           console.log("Document does not exist");
         }
@@ -57,7 +57,7 @@ const EditPage = () => {
       const docRef = doc(db, "users", userId, "registrations", id);
 
       // 新しい画像がある場合、Firebase Storageにアップロード
-      let uploadedImageUrl = imageUrl;
+      let uploadedImageUrl = imageURL;
       if (newImage) {
         const storageRef = ref(storage, `images/${userId}/${newImage.name}`);
         await uploadBytes(storageRef, newImage);
@@ -68,7 +68,7 @@ const EditPage = () => {
         title,
         bio,
         date: Timestamp.fromDate(new Date(date)), // 日付(Timestamp型)
-        imageUrl: uploadedImageUrl,
+        imageURL: uploadedImageUrl,
       });
 
       alert("更新が完了しました");
@@ -82,8 +82,8 @@ const EditPage = () => {
       const docRef = doc(db, "users", userId, "registrations", id);
 
       // Storageから画像を削除
-      if (imageUrl) {
-        const imageRef = ref(storage, imageUrl);
+      if (imageURL) {
+        const imageRef = ref(storage, imageURL);
         await deleteObject(imageRef)
           .then(() => {
             console.log("画像が削除されました");
@@ -112,9 +112,9 @@ const EditPage = () => {
     <div className="flex justify-evenly items-center h-screen px-10">
       <div className="w-1/3">
         <div className="w-full h-64 relative">
-          {imageUrl ? (
+          {imageURL ? (
             <Image
-              src={imageUrl}
+              src={imageURL}
               alt="登録された画像"
               fill
               className="object-cover rounded"

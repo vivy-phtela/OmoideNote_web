@@ -34,11 +34,11 @@ const Uploadpage = () => {
       const userId = user.uid;
 
       // Storageに保存
-      let imageUrl = "";
+      let imageURL = "";
       if (selectedImage) {
         const imageRef = ref(storage, `present_images/${userId}/${Date.now()}`);
         await uploadString(imageRef, selectedImage, "data_url");
-        imageUrl = await getDownloadURL(imageRef);
+        imageURL = await getDownloadURL(imageRef);
       }
 
       // Firestoreに保存
@@ -48,7 +48,7 @@ const Uploadpage = () => {
           title: title,
           bio: bio,
           date: Timestamp.fromDate(new Date(date)), // 日付(Timestamp型)
-          imageUrl: imageUrl,
+          imageURL: imageURL,
         }
       );
 
