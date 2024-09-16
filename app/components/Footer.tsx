@@ -1,48 +1,42 @@
-"use client";
-
 import React from "react";
 import Link from "next/link";
-import { useAppContext } from "@/context/AppContext";
+import Image from "next/image";
+import { FaSquareInstagram } from "react-icons/fa6";
+import { FaSquareXTwitter } from "react-icons/fa6";
+import { FaSquareFacebook } from "react-icons/fa6";
 
 const Footer = () => {
-  const { user } = useAppContext();
-
   return (
-    <footer className="flex w-full h-60 bg-black justify-evenly items-center text-white">
-      {!user && (
-        // ログインしていない場合はユーザー情報を表示
-        <div className="w-2/5 h-52 p-3 border border-slate-500">
-          <div className="w-5/6 text-center text-xl leading-10 mx-auto">
-            <h2>新規会員登録またはログイン</h2>
-          </div>
-          <div className="flex justify-between items-center w-11/12 h-20 mx-auto mt-3">
-            <Link
-              href="/auth/register"
-              className="text-black h-10 bg-white px-4 py-2 ml-10 rounded-lg"
-            >
-              新規会員登録
-            </Link>
-            <Link
-              href="/auth/login"
-              className="text-black h-10 bg-white px-4 py-2 mr-10 rounded-lg"
-            >
-              ログイン
-            </Link>
-          </div>
+    <footer className="w-full bg-gray-100 py-6">
+      <div className="container mx-auto px-4">
+        {/* アイコン郡 */}
+        <div className="flex justify-center mb-4 space-x-8">
+          <a href="https://twitter.com">
+            <FaSquareXTwitter size={36} />
+          </a>
+          <a href="https://facebook.com">
+            <FaSquareFacebook size={36} />
+          </a>
+          <a href="https://instagram.com">
+            <FaSquareInstagram size={36} />
+          </a>
         </div>
-      )}
-      <div>
-        <h1 className="text-5xl">CONTACT</h1>
-        <h1>080-****-**** &nbsp; 平日10:00~18:00</h1>
-      </div>
 
-      <div>
-        <h1 className="text-2xl mb-4">各種リンク</h1>
-        <ul className="leading-10">
-          <li>Instagram</li>
-          <li>X</li>
-          <li>aitoto@gmail.com</li>
-        </ul>
+        {/* リンク一覧 */}
+        <div className="flex justify-center space-x-6 text-gray-600 mb-4 text-xs">
+          <Link href="/about">思い出ノートとは</Link>
+          <Link href="/faq">よくあるご質問</Link>
+          <Link href="/contact">お問い合わせ</Link>
+          <Link href="/guide">ご利用ガイド</Link>
+          <Link href="/terms">利用規約</Link>
+          <Link href="/privacy">プライバシーポリシー</Link>
+          <Link href="/law">特商法による表記</Link>
+        </div>
+
+        {/* 著作権表示 */}
+        <div className="text-center text-gray-500">
+          <p>© 2024 AITOTO</p>
+        </div>
       </div>
     </footer>
   );
