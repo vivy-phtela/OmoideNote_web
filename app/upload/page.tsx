@@ -11,7 +11,7 @@ const Uploadpage = () => {
   const { user } = useAppContext();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [title, setTitle] = useState("");
-  const [memo, setMemo] = useState("");
+  const [bio, setBio] = useState("");
   const [date, setDate] = useState("");
   const router = useRouter();
 
@@ -45,7 +45,7 @@ const Uploadpage = () => {
         collection(db, "users", userId, "registrations"),
         {
           title: title, // タイトル
-          memo: memo, // メモ
+          bio: bio, // 説明
           date: date, // 日付
           imageUrl: imageUrl, // 画像のURL
           createdAt: new Date(), // 登録日時
@@ -54,7 +54,7 @@ const Uploadpage = () => {
 
       alert("登録完了");
       setTitle("");
-      setMemo("");
+      setBio("");
       setDate("");
       setSelectedImage(null);
       router.push("/list");
@@ -64,7 +64,7 @@ const Uploadpage = () => {
   };
 
   return (
-    <div className="flex justify-evenly relative w-full h-screen bg-white items-center">
+    <div className="flex justify-evenly relative w-full h-screen items-center">
       <div className="w-[30rem] h-[30rem] mt-20 border-dashed border-2 border-black flex items-center justify-center">
         {selectedImage ? (
           // 画像が選択されている場合はプレビューを表示
@@ -97,13 +97,13 @@ const Uploadpage = () => {
           />
         </div>
         <div className="mt-8">
-          <p className="text-white text-xl">メモ</p>
+          <p className="text-white text-xl">説明</p>
           <textarea
             rows={5}
-            placeholder="メモを入力してください"
+            placeholder="説明を入力してください"
             className="w-full p-2 mt-2 border rounded resize-none"
-            value={memo}
-            onChange={(e) => setMemo(e.target.value)}
+            value={bio}
+            onChange={(e) => setBio(e.target.value)}
           />
         </div>
         <div className="mt-8">
