@@ -3,9 +3,20 @@
 import React, { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { db, storage } from "@/firebaseConfig";
-import { doc, getDoc, updateDoc, deleteDoc } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  updateDoc,
+  deleteDoc,
+  Timestamp,
+} from "firebase/firestore";
 import { useAppContext } from "@/context/AppContext";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+} from "firebase/storage";
 import Image from "next/image";
 
 const EditPage = () => {
@@ -16,7 +27,7 @@ const EditPage = () => {
   const [title, setTitle] = useState("");
   const [bio, setBio] = useState("");
   const [date, setDate] = useState("");
-  const [imageUrl, setImageUrl] = useState(""); // 画像URLの状態
+  const [imageUrl, setImageUrl] = useState("");
   const [newImage, setNewImage] = useState<File | null>(null); // 新しい画像の状態
 
   useEffect(() => {
@@ -30,8 +41,8 @@ const EditPage = () => {
           const data = docSnap.data();
           setTitle(data.title || "");
           setBio(data.bio || "");
-          setDate(data.date || "");
-          setImageUrl(data.imageUrl || ""); // 画像URLを取得
+          setDate(data.date?.toDate().toISOString().substr(0, 10) || ""); // タイムスタンプをISO形式の日付文字列に変換
+          setImageUrl(data.imageUrl || "");
         } else {
           console.log("Document does not exist");
         }
@@ -56,8 +67,8 @@ const EditPage = () => {
       await updateDoc(docRef, {
         title,
         bio,
-        date,
-        imageUrl: uploadedImageUrl, // 新しい画像URLを更新
+        date: Timestamp.fromDate(new Date(date)), // 日付(Timestamp型)
+        imageUrl: uploadedImageUrl,
       });
 
       alert("更新が完了しました");
@@ -70,6 +81,19 @@ const EditPage = () => {
       const userId = user.uid;
       const docRef = doc(db, "users", userId, "registrations", id);
 
+      // Storageから画像を削除
+      if (imageUrl) {
+        const imageRef = ref(storage, imageUrl);
+        await deleteObject(imageRef)
+          .then(() => {
+            console.log("画像が削除されました");
+          })
+          .catch((error) => {
+            console.error("画像の削除に失敗しました:", error);
+          });
+      }
+
+      // Firestoreからドキュメントを削除
       await deleteDoc(docRef);
 
       alert("削除が完了しました");
