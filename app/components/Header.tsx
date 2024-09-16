@@ -24,6 +24,8 @@ const Header = () => {
               alt="Omoide Note Logo"
               width={130}
               height={130}
+              priority
+              style={{ width: "auto", height: "auto" }} // アスペクト比を維持
             />
           </Link>
         </div>

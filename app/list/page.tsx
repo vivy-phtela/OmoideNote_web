@@ -60,20 +60,22 @@ const Listpage = () => {
   const currentItems = registrations.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
-    <div className="mt-20 h-screen p-6 pl-20">
-      <div className="grid grid-cols-3 gap-9">
+    <div className="h-screen p-6 pl-20">
+      <div className="grid grid-cols-3 gap-9 mt-20">
         {currentItems.map((item) => (
           <div
             key={item.id}
             className="cursor-pointer"
             onClick={() => handleClick(item.id)}
           >
-            <div className="w-60 h-60 relative overflow-hidden bg-gray-200">
+            <div className="w-60 h-60 relative overflow-hidden">
               <Image
                 src={item.imageURL}
                 alt={item.title}
                 fill
+                priority
                 className="object-cover"
+                sizes="100%"
               />
             </div>
             <h2 className="text-xl mt-2">{item.title}</h2>
@@ -81,11 +83,11 @@ const Listpage = () => {
           </div>
         ))}
       </div>
-      <div className="flex justify-end mt-4">
+      <div className="flex justify-end">
         {currentPage > 1 && (
           <button
             onClick={handlePreviousPage}
-            className="bg-gray-300 text-gray-700 px-4 py-2 rounded"
+            className="bg-gray-300 text-gray-700 px-4 py-2 rounded mr-3"
           >
             前のページ
           </button>
