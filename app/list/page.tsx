@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { db } from "@/firebaseConfig";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, Timestamp } from "firebase/firestore";
 import { useAppContext } from "@/context/AppContext";
 import Image from "next/image";
 
@@ -10,7 +10,7 @@ type Registration = {
   id: string;
   title: string;
   imageUrl: string;
-  date: string;
+  date: Timestamp;
   memo: string;
 };
 
@@ -34,7 +34,7 @@ const Listpage = () => {
 
         // dateによって並び替え
         data.sort(
-          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+          (a, b) => b.date.toDate().getTime() - a.date.toDate().getTime()
         );
 
         setRegistrations(data);
@@ -77,8 +77,7 @@ const Listpage = () => {
               />
             </div>
             <h2 className="text-xl mt-2">{item.title}</h2>
-            <p>{new Date(item.date).toLocaleDateString()}</p>{" "}
-            {/* 日付をフォーマットして表示 */}
+            <p>{item.date.toDate().toLocaleDateString()}</p> {/* 日付を表示 */}
           </div>
         ))}
       </div>
