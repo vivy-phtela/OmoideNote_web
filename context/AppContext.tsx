@@ -43,8 +43,8 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
       setUser(newUser); // ユーザー情報をセット
       setUserId(newUser ? newUser.uid : null); // ユーザ情報があればuidをセットし，なければnullをセット
       if (!newUser) {
-        // ユーザー情報がなければログインページにリダイレクト
-        router.push("/auth/login");
+        // ユーザー情報がなければ初期ページにリダイレクト
+        router.push("/");
       }
     });
     // クリーンアップ関数→監視を解除する
