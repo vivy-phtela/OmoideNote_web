@@ -56,10 +56,13 @@ const EditPage = () => {
       const userId = user.uid;
       const docRef = doc(db, "users", userId, "registrations", id);
 
-      // 新しい画像がある場合、Firebase Storageにアップロード
+      // 新しい画像がある場合はStorageにアップロード
       let uploadedImageUrl = imageURL;
       if (newImage) {
-        const storageRef = ref(storage, `images/${userId}/${newImage.name}`);
+        const storageRef = ref(
+          storage,
+          `present_images/${userId}/${Date.now()}`
+        );
         await uploadBytes(storageRef, newImage);
         uploadedImageUrl = await getDownloadURL(storageRef);
       }
