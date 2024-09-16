@@ -31,6 +31,12 @@ const Listpage = () => {
         const data = snapshot.docs.map(
           (doc) => ({ id: doc.id, ...doc.data() } as Registration)
         );
+
+        // dateによって並び替え
+        data.sort(
+          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+        );
+
         setRegistrations(data);
       };
       fetchData();
@@ -66,12 +72,13 @@ const Listpage = () => {
               <Image
                 src={item.imageUrl}
                 alt={item.title}
-                layout="fill"
-                objectFit="cover"
+                fill
+                className="object-cover"
               />
             </div>
             <h2 className="text-xl mt-2">{item.title}</h2>
-            <p>{item.date}</p>
+            <p>{new Date(item.date).toLocaleDateString()}</p>{" "}
+            {/* 日付をフォーマットして表示 */}
           </div>
         ))}
       </div>
