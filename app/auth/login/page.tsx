@@ -24,7 +24,7 @@ const Login = () => {
   const onsubmit: SubmitHandler<Inputs> = async (data) => {
     await signInWithEmailAndPassword(auth, data.email, data.password)
       .then((userCredential) => {
-        router.push("/");
+        router.push("/home");
       })
       .catch((error) => {
         if (error.code === "auth/invalid-credential") {
@@ -39,7 +39,7 @@ const Login = () => {
     <div className="h-screen flex flex-col items-center justify-center">
       <form
         onSubmit={handleSubmit(onsubmit)}
-        className="bg-white p-8 rounded-lg shadow-lg w-96"
+        className="bg-white p-8 rounded-lg border-2 border-gray-400 w-96"
       >
         <h1 className="mb-4 text-2xl font-bold">ログイン</h1>
         <div className="mb-4">
@@ -54,7 +54,7 @@ const Login = () => {
               },
             })}
             type="text"
-            className="mt-1 border-2 rounded-md w-full p-2"
+            className="mt-1 border-2 border-gray-400 rounded-md w-full p-2"
           />
           {errors.email && (
             <span className="text-red-600 text-sm">{errors.email.message}</span>
@@ -71,7 +71,7 @@ const Login = () => {
               },
             })}
             type="password"
-            className="mt-1 border-2 rounded-md w-full p-2"
+            className="mt-1 border-2 border-gray-400 rounded-md w-full p-2"
           />
           {errors.password && (
             <span className="text-red-600 text-sm">
