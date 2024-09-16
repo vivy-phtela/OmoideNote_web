@@ -15,16 +15,17 @@ const Header = () => {
   };
 
   return (
-    <header className="flex bg-slate-200 fixed top-0 left-0 w-full h-20 z-50">
+    <header className="flex bg-white fixed top-0 left-0 w-full h-20 z-50 border-b-2 border-gray-200">
       <div className="flex items-center">
-        <div className="flex w-16 h-16 mx-10 items-center justify-center">
-          <Link href={"/"}>
+        <div className="flex items-center justify-center px-5">
+          <Link href={user ? "/home" : "/"}>
             <Image
-              src="/logo.png"
+              src="/mainLogo.png"
               alt="Omoide Note Logo"
-              width={60}
-              height={60}
-              className="rounded-full"
+              width={130}
+              height={130}
+              priority
+              style={{ width: "auto", height: "auto" }} // アスペクト比を維持
             />
           </Link>
         </div>

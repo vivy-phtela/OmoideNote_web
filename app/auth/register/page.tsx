@@ -1,15 +1,17 @@
 "use client";
 
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { setDoc, doc } from "firebase/firestore";
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { auth } from "../../../firebaseConfig";
+import { auth, db } from "../../../firebaseConfig";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 type Inputs = {
   email: string;
   password: string;
+  username: string;
 };
 
 const Register = () => {
@@ -23,8 +25,16 @@ const Register = () => {
 
   const onsubmit: SubmitHandler<Inputs> = async (data) => {
     await createUserWithEmailAndPassword(auth, data.email, data.password)
-      .then((userCredential) => {
+      .then(async (userCredential) => {
         const user = userCredential.user;
+
+        // Firestoreにユーザ情報を保存
+        await setDoc(doc(db, "users", user.uid), {
+          email: data.email,
+          username: data.username,
+          id: user.uid,
+        });
+
         router.push("/auth/login");
       })
       .catch((error) => {
@@ -40,9 +50,24 @@ const Register = () => {
     <div className="h-screen flex flex-col items-center justify-center">
       <form
         onSubmit={handleSubmit(onsubmit)}
-        className="bg-white p-8 rounded-lg shadow-lg w-96"
+        className="bg-white p-8 rounded-lg border-2 border-gray-400 w-96"
       >
         <h1 className="mb-4 text-2xl font-bold">新規登録</h1>
+        <div className="mb-4">
+          <label className="block text-sm font-medium">ユーザ名</label>
+          <input
+            {...register("username", {
+              required: "ユーザ名は必須です．",
+            })}
+            type="text"
+            className="mt-1 border-2 border-gray-400 rounded-md w-full p-2"
+          />
+          {errors.username && (
+            <span className="text-red-600 text-sm">
+              {errors.username.message}
+            </span>
+          )}
+        </div>
         <div className="mb-4">
           <label className="block text-sm font-medium">メールアドレス</label>
           <input
@@ -55,7 +80,7 @@ const Register = () => {
               },
             })}
             type="text"
-            className="mt-1 border-2 rounded-md w-full p-2"
+            className="mt-1 border-2 border-gray-400 rounded-md w-full p-2"
           />
           {errors.email && (
             <span className="text-red-600 text-sm">{errors.email.message}</span>
@@ -72,7 +97,7 @@ const Register = () => {
               },
             })}
             type="password"
-            className="mt-1 border-2 rounded-md w-full p-2"
+            className="mt-1 border-2 border-gray-400 rounded-md w-full p-2"
           />
           {errors.password && (
             <span className="text-red-600 text-sm">

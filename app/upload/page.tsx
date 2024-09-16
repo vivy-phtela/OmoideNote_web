@@ -1,39 +1,83 @@
-"use client"; //クライアント側の定義
+"use client";
 
 import React, { useState } from "react";
+import { useAppContext } from "@/context/AppContext";
+import { db, storage } from "@/firebaseConfig";
+import { collection, addDoc, updateDoc } from "firebase/firestore";
+import { ref, uploadString, getDownloadURL } from "firebase/storage";
+import { useRouter } from "next/navigation";
+import { Timestamp } from "firebase/firestore";
 
 const Uploadpage = () => {
-  const [selectedImage, setSelectedImage] = useState<string | null>(null); //画像選択state
+  const { user } = useAppContext();
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [title, setTitle] = useState("");
+  const [bio, setBio] = useState("");
+  const [date, setDate] = useState("");
+  const router = useRouter();
 
+  // アップロードした画像をプレビュー
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    //ファイル選択時
-    const file = event.target.files?.[0]; //ユーザが選択したファイルリストをfileに格納
+    const file = event.target.files?.[0];
     if (file) {
-      const reader = new FileReader(); //FireRenderでファイル読み込み
+      const reader = new FileReader();
       reader.onload = () => {
-        //読み込みが完了したときの関数
-        setSelectedImage(reader.result as string); //画像選択stateにセット
+        setSelectedImage(reader.result as string);
       };
       reader.readAsDataURL(file);
     }
   };
 
-  const handleSubmit = () => {
-    //クリックされた時の処理を追加
-    alert("登録完了");
+  const handleSubmit = async () => {
+    try {
+      if (!user) return; // ユーザがログインしているか確認
+      const userId = user.uid;
+
+      // Storageに保存
+      let imageURL = "";
+      if (selectedImage) {
+        const imageRef = ref(storage, `present_images/${userId}/${Date.now()}`);
+        await uploadString(imageRef, selectedImage, "data_url");
+        imageURL = await getDownloadURL(imageRef);
+      }
+
+      // Firestoreに保存
+      const docRef = await addDoc(
+        collection(db, "users", userId, "registrations"),
+        {
+          title: title,
+          bio: bio,
+          date: Timestamp.fromDate(new Date(date)), // 日付(Timestamp型)
+          imageURL: imageURL,
+        }
+      );
+
+      await updateDoc(docRef, {
+        id: docRef.id,
+      });
+
+      alert("登録完了");
+      setTitle("");
+      setBio("");
+      setDate("");
+      setSelectedImage(null);
+      router.push("/list");
+    } catch (error) {
+      console.error("Error", error);
+    }
   };
 
   return (
-    <div className="flex justify-center relative w-full h-screen bg-white">
-      <div className="w-96 h-96 mt-60 mr-10 border-dashed border-2 border-black flex items-center justify-center">
-        {selectedImage ? ( //データがあるか確認
+    <div className="flex justify-evenly relative w-full h-screen items-center">
+      <div className="w-[30rem] h-[30rem] mt-20 border-dashed border-2 border-black flex items-center justify-center">
+        {selectedImage ? (
+          // 画像が選択されている場合はプレビューを表示
           <img
             src={selectedImage}
             alt="Uploaded"
             className="w-full h-full object-cover"
-          /> //データがある場合の処理
+          />
         ) : (
-          //データがない場合の処理
           <label className="cursor-pointer w-full h-full flex items-center justify-center">
             <span>クリックして写真をインポート</span>
             <input
@@ -45,28 +89,37 @@ const Uploadpage = () => {
           </label>
         )}
       </div>
-      <div className="bg-slate-500 h-3/4 w-2/5 mt-36 ml-10 p-5 rounded">
+      <div className="bg-slate-500 h-3/4 w-2/5 mt-20 p-5 rounded-2xl">
         <div className="mt-5">
           <p className="text-white text-xl">タイトル</p>
           <input
             type="text"
             placeholder="タイトルを入力してください"
             className="w-full p-2 mt-2 border rounded"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
           />
         </div>
-        <div className="mt-10">
-          <p className="text-white text-xl">メモ</p>
+        <div className="mt-8">
+          <p className="text-white text-xl">説明</p>
           <textarea
             rows={5}
-            placeholder="メモを入力してください"
-            className="w-full p-2 mt-2 border rounded"
+            placeholder="説明を入力してください"
+            className="w-full p-2 mt-2 border rounded resize-none"
+            value={bio}
+            onChange={(e) => setBio(e.target.value)}
           />
         </div>
-        <div className="mt-10">
+        <div className="mt-8">
           <p className="text-white text-xl">日付</p>
-          <input type="date" className="w-full p-2 mt-2 border rounded" />
+          <input
+            type="date"
+            className="w-full p-2 mt-2 border rounded"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+          />
         </div>
-        <div className="mt-16 flex justify-center">
+        <div className="mt-8 flex justify-center">
           <button
             onClick={handleSubmit}
             className="bg-blue-500 text-white text-xl w-28 h-12 py-2 px-4 rounded hover:bg-blue-700"
