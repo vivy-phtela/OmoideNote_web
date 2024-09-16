@@ -3,9 +3,10 @@
 import React, { useState } from "react";
 import { useAppContext } from "@/context/AppContext";
 import { db, storage } from "@/firebaseConfig";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, updateDoc } from "firebase/firestore";
 import { ref, uploadString, getDownloadURL } from "firebase/storage";
 import { useRouter } from "next/navigation";
+import { Timestamp } from "firebase/firestore";
 
 const Uploadpage = () => {
   const { user } = useAppContext();
@@ -15,7 +16,7 @@ const Uploadpage = () => {
   const [date, setDate] = useState("");
   const router = useRouter();
 
-  // アップロードした画像をプレビューする
+  // アップロードした画像をプレビュー
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -35,22 +36,25 @@ const Uploadpage = () => {
       // Storageに保存
       let imageUrl = "";
       if (selectedImage) {
-        const imageRef = ref(storage, `present_images/${userId}/${Date.now()}`); // 画像の保存先
-        await uploadString(imageRef, selectedImage, "data_url"); // 画像をアップロード
-        imageUrl = await getDownloadURL(imageRef); // 画像のURLを取得
+        const imageRef = ref(storage, `present_images/${userId}/${Date.now()}`);
+        await uploadString(imageRef, selectedImage, "data_url");
+        imageUrl = await getDownloadURL(imageRef);
       }
 
-      // Firestore Databaseに保存
+      // Firestoreに保存
       const docRef = await addDoc(
         collection(db, "users", userId, "registrations"),
         {
-          title: title, // タイトル
-          bio: bio, // 説明
-          date: date, // 日付
-          imageUrl: imageUrl, // 画像のURL
-          createdAt: new Date(), // 登録日時
+          title: title,
+          bio: bio,
+          date: Timestamp.fromDate(new Date(date)), // 日付(Timestamp型)
+          imageUrl: imageUrl,
         }
       );
+
+      await updateDoc(docRef, {
+        id: docRef.id,
+      });
 
       alert("登録完了");
       setTitle("");
