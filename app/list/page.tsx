@@ -60,7 +60,7 @@ const Listpage = () => {
   const currentItems = registrations.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
-    <div className="p-6 pl-20 mt-20 h-full">
+    <div className="mt-20 h-screen p-6 pl-20">
       <div className="grid grid-cols-3 gap-9">
         {currentItems.map((item) => (
           <div
