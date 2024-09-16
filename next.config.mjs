@@ -1,4 +1,9 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+
+export const nextConfig = {
+  images: {
+    domains: ["firebasestorage.googleapis.com"], // firebase storageからの画像表示を許可
+  },
+};
 
 export default nextConfig;
