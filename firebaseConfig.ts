@@ -37,7 +37,7 @@ if (typeof document !== "undefined") {
   // 2.AppCheck 初期化
   const appCheck = initializeAppCheck(app, {
     provider: new ReCaptchaV3Provider(
-      process.env.NEXT_PUBLIC__RECAPTCHA_SITEKEY as string
+      process.env.NEXT_PUBLIC_RECAPTCHA_SITEKEY as string
     ),
     isTokenAutoRefreshEnabled: true,
   });
