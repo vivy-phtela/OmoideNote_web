@@ -19,7 +19,9 @@ export default function RootLayout({
       <body>
         <AppProvider>
           <Header />
-          {children}
+          <main className="mt-20">
+            {children}
+          </main>
           <Footer />
         </AppProvider>
       </body>
