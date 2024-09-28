@@ -5,6 +5,16 @@ import { db } from "@/firebaseConfig";
 import { collection, getDocs, Timestamp } from "firebase/firestore";
 import { useAppContext } from "@/context/AppContext";
 import Image from "next/image";
+import Link from "next/link";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+
 
 type Registration = {
   id: string;
@@ -19,7 +29,7 @@ const Listpage = () => {
   const router = useRouter();
   const [registrations, setRegistrations] = useState<Registration[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 6;
+  const itemsPerPage = 12;
 
   useEffect(() => {
     if (user) {
@@ -60,27 +70,25 @@ const Listpage = () => {
   const currentItems = registrations.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
-    <div className="h-screen p-6 pl-20">
-      <div className="grid grid-cols-3 gap-9 mt-20">
+    <div className="w-full p-6">
+      <div className="flex justify-evenly flex-wrap gap-2 w-full">
         {currentItems.map((item) => (
-          <div
-            key={item.id}
-            className="cursor-pointer"
-            onClick={() => handleClick(item.id)}
-          >
-            <div className="w-60 h-60 relative overflow-hidden">
-              <Image
-                src={item.imageURL}
-                alt={item.title}
-                fill
-                priority
-                className="object-cover"
-                sizes="100%"
-              />
-            </div>
-            <h2 className="text-xl mt-2">{item.title}</h2>
-            <p>{item.date.toDate().toLocaleDateString()}</p> {/* 日付を表示 */}
-          </div>
+          <Card key={item.id} className="relative w-72 mb-5 overflow-hidden transform transition-transform hover:-translate-y-2 hover:shadow-2xl">
+            <Link href={`/edit/${item.id}`} className="w-full">
+              <CardContent className="relative w-full h-[216px] border-b">
+                <Image
+                  src={item.imageURL}
+                  alt={item.title}
+                  fill
+                  className="object-contain object-center"
+                />
+              </CardContent>      
+              <CardFooter >
+                <h2 className="text-xl font-bold mb-3">{item.title}</h2>
+                <p className="text-right">{item.date.toDate().toLocaleDateString()}</p> {/* 日付を表示 */}
+              </CardFooter>        
+            </Link>
+          </Card>
         ))}
       </div>
       <div className="flex justify-end">
