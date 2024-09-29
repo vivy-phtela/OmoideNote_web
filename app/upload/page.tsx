@@ -68,7 +68,7 @@ const Uploadpage = () => {
   };
 
   return (
-    <div className="flex justify-evenly relative w-full h-screen items-center">
+    <div className="min-h-[calc(100vh-80px)] pt-[80px] flex justify-evenly relative w-full h-screen items-center">
       <div className="w-[30rem] h-[30rem] rounded-xl overflow-hidden mt-20 border-dashed border-2 border-gray-800 flex items-center justify-center relative">
         {selectedImage ? (
           <>

@@ -75,8 +75,8 @@ const Listpage = () => {
   const currentItems = registrations.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
-    <div className="text-[#35322E] w-full p-6">
-      <div className="flex justify-evenly flex-wrap gap-2 w-full">
+    <div className="min-h-[calc(100vh-80px)] pt-[80px] text-[#35322E] w-full p-6">
+      <div className="flex justify-evenly flex-wrap mt-6 gap-2 w-full">
         {currentItems.map((item) => (
           <Card key={item.id} className="relative w-72 pb-2 mb-5 overflow-hidden transform transition-transform hover:-translate-y-2 hover:shadow-2xl">
             <Link href={`/edit/${item.id}`} className="w-full">
@@ -85,6 +85,7 @@ const Listpage = () => {
                   src={item.imageURL}
                   alt={item.title}
                   fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   className="object-contain object-center"
                 />
                 <p className="absolute right-0 bottom-0 px-2 py-1 rounded-tl-xl bg-black bg-opacity-55 text-white">{item.date.toDate().toLocaleDateString()}</p> {/* 日付を表示 */}

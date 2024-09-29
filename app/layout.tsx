@@ -25,9 +25,7 @@ export default function RootLayout({
       <body className={NoteSerifJP.className}>
         <AppProvider>
           <Header />
-          <main className="mt-20">
             {children}
-          </main>
           <Footer />
         </AppProvider>
       </body>
