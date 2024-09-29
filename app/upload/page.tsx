@@ -68,15 +68,25 @@ const Uploadpage = () => {
   };
 
   return (
-    <div className="flex justify-evenly relative w-full h-screen items-center">
-      <div className="w-[30rem] h-[30rem] mt-20 border-dashed border-2 border-black flex items-center justify-center">
+    <div className="min-h-[calc(100vh-80px)] pt-[80px] flex justify-evenly relative w-full h-screen items-center">
+      <div className="w-[30rem] h-[30rem] rounded-xl overflow-hidden mt-20 border-dashed border-2 border-gray-800 flex items-center justify-center relative">
         {selectedImage ? (
-          // 画像が選択されている場合はプレビューを表示
-          <img
-            src={selectedImage}
-            alt="Uploaded"
-            className="w-full h-full object-cover"
-          />
+          <>
+            <img
+              src={selectedImage}
+              alt="Uploaded"
+              className="w-full h-full object-contain object-center"
+            />
+            <label className="absolute top-0 left-0 w-full h-full cursor-pointer flex items-center justify-center opacity-0 hover:opacity-100 bg-black bg-opacity-50 text-white">
+              <span>クリックして写真を再インポート</span>
+              <input
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={handleImageChange}
+              />
+            </label>
+          </>         
         ) : (
           <label className="cursor-pointer w-full h-full flex items-center justify-center">
             <span>クリックして写真をインポート</span>
