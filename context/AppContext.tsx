@@ -42,10 +42,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     const unsubscribe = onAuthStateChanged(auth, (newUser) => {
       setUser(newUser); // ユーザー情報をセット
       setUserId(newUser ? newUser.uid : null); // ユーザ情報があればuidをセットし，なければnullをセット
-      if (newUser) {
-        // ユーザー情報があれば/homeにリダイレクト
-        router.push("/home");
-      } else {
+      if (!newUser) {
         // ユーザー情報がなければ/にリダイレクト
         router.push("/");
       }
