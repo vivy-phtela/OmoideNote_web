@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useAppContext } from "@/context/AppContext";
@@ -8,11 +8,47 @@ import { auth } from "@/firebaseConfig";
 
 const Header = () => {
   const { user } = useAppContext();
+  const [loading, setLoading] = useState(true);
 
   // ログアウト
   const handleLogout = () => {
     auth.signOut();
   };
+
+  useEffect(() => {
+    if (user !== null) {
+      setLoading(false); // 認証情報が取得されたらローディングを解除
+    }
+  }, [user]);
+
+  if (loading) {
+    // 認証情報の取得中はローディング表示
+    return (
+      <header className="flex bg-white fixed top-0 left-0 w-full h-20 z-50 border-b-2 border-gray-200">
+        <div className="flex items-center">
+          <div className="flex items-center justify-center px-5">
+            <Link href={user ? "/home" : "/"}>
+              <Image
+                src="/mainLogo.png"
+                alt="Omoide Note Logo"
+                width={130}
+                height={130}
+                priority
+                style={{ width: "auto", height: "auto" }} // アスペクト比を維持
+              />
+            </Link>
+          </div>
+          <nav>
+            <ul className="flex gap-10 text-lg">
+              <li>
+                <div className="text-gray-700">Loading...</div>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+    );
+  }
 
   return (
     <header className="flex bg-white fixed top-0 left-0 w-full h-20 z-50 border-b-2 border-gray-200">
