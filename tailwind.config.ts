@@ -59,6 +59,7 @@ const config: Config = {
   		},
 		  screens: {
 			'list': '928px',
+			'upload': '1000px',
 		},
   	}
   },
