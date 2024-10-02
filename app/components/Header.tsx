@@ -5,6 +5,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { useAppContext } from "@/context/AppContext";
 import { auth } from "@/firebaseConfig";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/Sheet"
+import { FiAlignJustify } from "react-icons/fi";
+import { Description } from "@radix-ui/react-dialog";
+
 
 const Header = () => {
   const { user, isOnHomePage } = useAppContext();
@@ -65,7 +76,7 @@ const Header = () => {
             />
           </Link>
         </div>
-        <nav>
+        <nav className="hidden md:block">
           <ul className="flex gap-10 text-lg">
             {user && (
               <>
@@ -131,6 +142,51 @@ const Header = () => {
             )}
           </ul>
         </nav>
+      </div>
+      <div className="md:hidden flex flex-grow justify-end mr-5">
+        <Sheet>
+          <SheetTrigger>
+            <FiAlignJustify className="h-10 w-10"/>
+          </SheetTrigger>
+          {user && (
+            <SheetContent className="px-0 pt-10">
+              <SheetHeader className="mb-3">
+                <SheetTitle className="text-center">{user.email}</SheetTitle>
+                <Description></Description>
+              </SheetHeader>
+              <div className="flex flex-col w-full text-center">
+                <Link href="/home" className="border-y py-5">
+                  ホーム
+                </Link>
+                <Link href="/upload" className="border-b py-5">
+                  登録
+                </Link>
+                <Link href="/list" className="border-b py-5">
+                  一覧
+                </Link>
+                <button onClick={handleLogout} className="border-b py-5">
+                  ログアウト
+                </button>
+              </div>
+            </SheetContent>
+          )}   
+          {!user && (
+            <SheetContent className="px-0 pt-10">
+              <SheetHeader className="mb-3">
+                <SheetTitle>Not logged in</SheetTitle>
+                <Description></Description>
+              </SheetHeader>
+              <div className="flex flex-col w-full text-center">
+                <Link href="/auth/register" className="border-y py-5">
+                  新規登録
+                </Link>
+                <Link href="/auth/login" className="border-b py-5">
+                  ログイン
+                </Link>
+              </div>
+            </SheetContent>
+          )}      
+        </Sheet>  
       </div>
     </header>
   );
