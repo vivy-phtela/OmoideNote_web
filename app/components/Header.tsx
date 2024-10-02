@@ -7,7 +7,7 @@ import { useAppContext } from "@/context/AppContext";
 import { auth } from "@/firebaseConfig";
 
 const Header = () => {
-  const { user } = useAppContext();
+  const { user, isOnHomePage } = useAppContext();
   const [loading, setLoading] = useState(true);
 
   // ログアウト
@@ -21,7 +21,7 @@ const Header = () => {
     }
   }, [user]);
 
-  if (loading) {
+  if (loading && !isOnHomePage) {
     // 認証情報の取得中はローディング表示
     return (
       <header className="flex bg-white fixed top-0 left-0 w-full h-20 z-50 border-b-2 border-gray-200">

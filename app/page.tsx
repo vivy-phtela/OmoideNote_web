@@ -2,11 +2,18 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useAppContext } from "@/context/AppContext";
 import Link from "next/link";
 
 export default function ServiceIntro() {
   const [stage, setStage] = useState("text");
   const message = "人と人をつなぐ";
+  const { setIsOnHomePage } = useAppContext();
+
+  useEffect(() => {
+    setIsOnHomePage(true); 
+    return () => setIsOnHomePage(false); 
+  }, [setIsOnHomePage]);
 
   useEffect(() => {
     const textTimer = setTimeout(() => setStage("content"), 3000); // 3秒後にコンテンツを表示
