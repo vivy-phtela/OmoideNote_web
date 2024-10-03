@@ -17,6 +17,8 @@ type AppContextType = {
   user: User | null;
   userid: string | null;
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
+  isOnHomePage: boolean;
+  setIsOnHomePage: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 // コンテキストの初期値
@@ -24,6 +26,8 @@ const defaultContextData = {
   user: null,
   userid: null,
   setUser: () => {},
+  isOnHomePage: false,
+  setIsOnHomePage: () => {},
 };
 
 // コンテキストの作成
@@ -34,6 +38,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   // 提供したいデータの定義
   const [user, setUser] = useState<User | null>(null);
   const [userid, setUserId] = useState<string | null>(null);
+  const [isOnHomePage, setIsOnHomePage] = useState<boolean>(false); // ページ情報の管理
 
   const router = useRouter();
 
@@ -42,10 +47,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     const unsubscribe = onAuthStateChanged(auth, (newUser) => {
       setUser(newUser); // ユーザー情報をセット
       setUserId(newUser ? newUser.uid : null); // ユーザ情報があればuidをセットし，なければnullをセット
-      if (newUser) {
-        // ユーザー情報があれば/homeにリダイレクト
-        router.push("/home");
-      } else {
+      if (!newUser) {
         // ユーザー情報がなければ/にリダイレクト
         router.push("/");
       }
@@ -58,7 +60,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
 
   // プロバイダーを作成し，コンテキストを提供
   return (
-    <AppContext.Provider value={{ user, userid, setUser }}>
+    <AppContext.Provider value={{ user, userid, setUser, isOnHomePage, setIsOnHomePage }}>
       {children}
     </AppContext.Provider>
   );

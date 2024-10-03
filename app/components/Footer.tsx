@@ -23,7 +23,7 @@ const Footer = () => {
         </div>
 
         {/* リンク一覧 */}
-        <div className="flex justify-center space-x-6 text-gray-600 mb-4 text-xs">
+        <div className="flex flex-wrap justify-center space-x-6 gap-y-3 text-gray-600 mb-4 text-center text-xs">
           <Link href="/about">思い出ノートとは</Link>
           <Link href="/faq">よくあるご質問</Link>
           <Link href="/contact">お問い合わせ</Link>
