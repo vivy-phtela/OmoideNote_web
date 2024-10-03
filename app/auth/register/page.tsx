@@ -2,11 +2,12 @@
 
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { setDoc, doc } from "firebase/firestore";
-import React from "react";
+import React, {useEffect} from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { auth, db } from "../../../firebaseConfig";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useAppContext } from "@/context/AppContext";
 
 type Inputs = {
   email: string;
@@ -16,6 +17,13 @@ type Inputs = {
 
 const Register = () => {
   const router = useRouter();
+  const { setIsOnHomePage } = useAppContext();
+
+  useEffect(() => {
+    setIsOnHomePage(true); 
+    return () => setIsOnHomePage(false); 
+  }, [setIsOnHomePage]);
+
 
   const {
     register,
