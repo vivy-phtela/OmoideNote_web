@@ -112,30 +112,72 @@ const EditPage = () => {
   };
 
   return (
-    <div className="flex justify-evenly items-center h-screen px-10">
-      <div className="w-1/3">
-        <div className="w-full h-64 relative">
-          {imageURL ? (
-            <Image
+    <div className="min-h-[calc(100vh-80px)] mt-20 px-3 sm:px-10 py-3 upload:flex upload:justify-evenly upload:items-center w-full">
+      <div className="hidden upload:flex items-center justify-center relative w-1/3 aspect-[4/3] rounded-xl overflow-hidden border-dashed border-2 border-gray-200">
+        {imageURL ? (
+          <>
+            <img
               src={imageURL}
               alt="登録された画像"
-              fill
-              className="object-cover rounded"
+              className="w-full h-full object-contain object-center"
             />
+            <label className="absolute top-0 left-0 w-full h-full cursor-pointer flex items-center justify-center opacity-0 hover:opacity-100 bg-black bg-opacity-50 text-white">
+              <span>クリックして写真を再インポート</span>
+              <input
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={handleImageChange}
+              />
+            </label>
+          </>
+        ) : (
+          <label className="cursor-pointer w-full h-full flex items-center justify-center">
+            <span>クリックして写真をインポート</span>
+            <input
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={handleImageChange}
+            />
+          </label>
+        )}
+      </div>
+      <div className="flex flex-col bg-slate-500 w-full upload:w-2/3 upload:ml-6 p-5 rounded-2xl items-center">
+        <div className="upload:hidden flex items-center justify-center relative w-[80%] aspect-[4/3] rounded-xl overflow-hidden border-dashed border-2 border-gray-400">
+          {imageURL ? (
+            <>
+              <img
+                src={imageURL}
+                alt="Uploaded"
+                className="w-full h-full object-contain object-center"
+              />
+              <label className="absolute top-0 left-0 w-full h-full cursor-pointer flex items-center justify-center opacity-0 hover:opacity-100 bg-black bg-opacity-50 text-white">
+                <span>クリックして写真を再インポート</span>
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={handleImageChange}
+                />
+              </label>
+            </>
           ) : (
-            <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-              <p>画像がありません</p>
-            </div>
+            <label className="cursor-pointer w-full h-full flex items-center justify-center">
+              <span className="text-gray-200">
+                クリックして写真をインポート
+              </span>
+              <input
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={handleImageChange}
+              />
+            </label>
           )}
         </div>
-        <div className="mt-4">
-          <input type="file" accept="image/*" onChange={handleImageChange} />
-        </div>
-      </div>
-
-      <div className="w-2/3 pl-6">
-        <div className="mb-6">
-          <p className="text-xl">タイトル</p>
+        <div className="mt-5 w-full">
+          <p className="text-white text-xl">タイトル</p>
           <input
             type="text"
             placeholder="タイトルを入力してください"
@@ -144,18 +186,18 @@ const EditPage = () => {
             onChange={(e) => setTitle(e.target.value)}
           />
         </div>
-        <div className="mb-6">
-          <p className="text-xl">説明</p>
+        <div className="mt-8 w-full">
+          <p className="text-white text-xl">説明</p>
           <textarea
             rows={5}
             placeholder="説明を入力してください"
-            className="w-full p-2 mt-2 border rounded"
+            className="w-full p-2 mt-2 border rounded resize-none"
             value={bio}
             onChange={(e) => setBio(e.target.value)}
           />
         </div>
-        <div className="mb-6">
-          <p className="text-xl">日付</p>
+        <div className="mt-8 w-full">
+          <p className="text-white text-xl">日付</p>
           <input
             type="date"
             className="w-full p-2 mt-2 border rounded"
@@ -163,8 +205,7 @@ const EditPage = () => {
             onChange={(e) => setDate(e.target.value)}
           />
         </div>
-
-        <div className="flex justify-between">
+        <div className="flex justify-between mt-8 w-full">
           <button
             onClick={handleUpdate}
             className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"

@@ -3,8 +3,8 @@ import React from "react";
 const home = () => {
   return (
     <div>
-      <div className="w-full h-screen">
-        <h1 className="text-9xl mt-20">ホーム</h1>
+      <div className="min-h-[calc(100vh-80px)] mt-20">
+        <h1 className="">ホーム</h1>
       </div>
     </div>
   );
