@@ -15,11 +15,19 @@ import {
 } from "@/components/ui/Sheet"
 import { FiAlignJustify } from "react-icons/fi";
 import { Description } from "@radix-ui/react-dialog";
+import { useRouter } from "next/navigation";
 
 
 const Header = () => {
   const { user, isOnHomePage } = useAppContext();
   const [loading, setLoading] = useState(true);
+  const [isOpen, setIsOpen] = useState(false); 
+  const router = useRouter();
+
+  const handleLinkClick = (href: string) => {
+    router.push(href);
+    setIsOpen(false);
+  };
 
   // ログアウト
   const handleLogout = () => {
@@ -144,7 +152,7 @@ const Header = () => {
         </nav>
       </div>
       <div className="md:hidden flex flex-grow justify-end mr-5">
-        <Sheet>
+        <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger>
             <FiAlignJustify className="h-10 w-10"/>
           </SheetTrigger>
@@ -155,21 +163,21 @@ const Header = () => {
                 <Description></Description>
               </SheetHeader>
               <div className="flex flex-col w-full text-center">
-                <Link href="/home" className="border-y py-5">
+                <button onClick={() => handleLinkClick('/home')} className="border-y py-5">
                   ホーム
-                </Link>
-                <Link href="/upload" className="border-b py-5">
+                </button>
+                <button onClick={() => handleLinkClick('/upload')} className="border-b py-5">
                   登録
-                </Link>
-                <Link href="/list" className="border-b py-5">
+                </button>
+                <button onClick={() => handleLinkClick('/list')} className="border-b py-5">
                   一覧
-                </Link>
+                </button>
                 <button onClick={handleLogout} className="border-b py-5">
                   ログアウト
                 </button>
               </div>
             </SheetContent>
-          )}   
+          )}
           {!user && (
             <SheetContent className="px-0 pt-10">
               <SheetHeader className="mb-3">
@@ -177,16 +185,16 @@ const Header = () => {
                 <Description></Description>
               </SheetHeader>
               <div className="flex flex-col w-full text-center">
-                <Link href="/auth/register" className="border-y py-5">
+                <button onClick={() => handleLinkClick('/auth/register')} className="border-y py-5">
                   新規登録
-                </Link>
-                <Link href="/auth/login" className="border-b py-5">
+                </button>
+                <button onClick={() => handleLinkClick('/auth/login')} className="border-b py-5">
                   ログイン
-                </Link>
+                </button>
               </div>
             </SheetContent>
-          )}      
-        </Sheet>  
+          )}
+        </Sheet>
       </div>
     </header>
   );
