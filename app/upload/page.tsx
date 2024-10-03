@@ -68,7 +68,7 @@ const Uploadpage = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-80px)] mt-20 px-3 sm:px-10 pb-3 upload:flex upload:justify-evenly upload:items-center w-full">
+    <div className="min-h-[calc(100vh-80px)] mt-20 px-3 sm:px-10 py-3 upload:flex upload:justify-evenly upload:items-center w-full">
       <div className="hidden upload:flex items-center justify-center relative w-1/3 aspect-[4/3] rounded-xl overflow-hidden border-dashed border-2 border-gray-800">
         {selectedImage ? (
           <>
@@ -99,7 +99,7 @@ const Uploadpage = () => {
           </label>
         )}
       </div>
-      <div className="flex flex-col bg-slate-500 w-full h-3/4 upload:w-2/3 upload:ml-6 p-5 mt-3 rounded-2xl items-center">
+      <div className="flex flex-col bg-slate-500 w-full upload:w-2/3 upload:ml-6 p-5 rounded-2xl items-center">
         <div className="upload:hidden flex items-center justify-center relative w-[80%] aspect-[4/3] rounded-xl overflow-hidden border-dashed border-2 border-gray-400">
           {selectedImage ? (
             <>

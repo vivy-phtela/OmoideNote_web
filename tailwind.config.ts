@@ -58,6 +58,7 @@ const config: Config = {
   			}
   		},
 		  screens: {
+			'login': '410px',
 			'list': '928px',
 			'upload': '1000px',
 		},

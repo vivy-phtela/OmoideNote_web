@@ -23,7 +23,7 @@ export default function ServiceIntro() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white flex flex-col items-center justify-center">
+    <div className="min-h-[calc(100vh-80px)] mt-[80px] p-4 bg-white flex flex-col items-center justify-center">
       <AnimatePresence>
         {stage === "text" && (
           <motion.div

@@ -55,10 +55,10 @@ const Register = () => {
   };
 
   return (
-    <div className="h-screen flex flex-col items-center justify-center">
+    <div className="min-h-[calc(100vh-80px)] mt-[80px] p-4 flex flex-col items-center justify-center">
       <form
         onSubmit={handleSubmit(onsubmit)}
-        className="bg-white p-8 rounded-lg border-2 border-gray-400 w-96"
+        className="bg-white p-8 rounded-lg border-2 border-gray-400 w-80 login:w-96"
       >
         <h1 className="mb-4 text-2xl font-bold">新規登録</h1>
         <div className="mb-4">
@@ -122,7 +122,7 @@ const Register = () => {
           </button>
         </div>
         <div className="mt-4">
-          <span className="text-gray-600 text-sm">
+          <span className="text-gray-600 text-xs login:text-sm">
             既にアカウントをお持ちですか？
           </span>
           <Link

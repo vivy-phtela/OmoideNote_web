@@ -181,7 +181,7 @@ const Header = () => {
           {!user && (
             <SheetContent className="px-0 pt-10">
               <SheetHeader className="mb-3">
-                <SheetTitle>Not logged in</SheetTitle>
+                <SheetTitle className="text-center">Not logged in</SheetTitle>
                 <Description></Description>
               </SheetHeader>
               <div className="flex flex-col w-full text-center">
