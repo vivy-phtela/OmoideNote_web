@@ -68,7 +68,7 @@ const Uploadpage = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-80px)] pt-[80px] px-3 sm:px-10 pb-3 upload:flex upload:justify-evenly upload:items-center w-full">
+    <div className="min-h-[calc(100vh-80px)] mt-20 px-3 sm:px-10 pb-3 upload:flex upload:justify-evenly upload:items-center w-full">
       <div className="hidden upload:flex items-center justify-center relative w-1/3 aspect-[4/3] rounded-xl overflow-hidden border-dashed border-2 border-gray-800">
         {selectedImage ? (
           <>
@@ -86,7 +86,7 @@ const Uploadpage = () => {
                 onChange={handleImageChange}
               />
             </label>
-          </>         
+          </>
         ) : (
           <label className="cursor-pointer w-full h-full flex items-center justify-center">
             <span>クリックして写真をインポート</span>
@@ -117,10 +117,12 @@ const Uploadpage = () => {
                   onChange={handleImageChange}
                 />
               </label>
-            </>         
+            </>
           ) : (
             <label className="cursor-pointer w-full h-full flex items-center justify-center">
-              <span className="text-gray-200">クリックして写真をインポート</span>
+              <span className="text-gray-200">
+                クリックして写真をインポート
+              </span>
               <input
                 type="file"
                 accept="image/*"

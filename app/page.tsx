@@ -11,8 +11,8 @@ export default function ServiceIntro() {
   const { setIsOnHomePage } = useAppContext();
 
   useEffect(() => {
-    setIsOnHomePage(true); 
-    return () => setIsOnHomePage(false); 
+    setIsOnHomePage(true);
+    return () => setIsOnHomePage(false);
   }, [setIsOnHomePage]);
 
   useEffect(() => {
@@ -23,12 +23,12 @@ export default function ServiceIntro() {
   }, []);
 
   return (
-    <div className="min-h-[calc(100vh-80px)] bg-white flex flex-col items-center justify-center p-4 pt-[80px]">
+    <div className="min-h-screen bg-white flex flex-col items-center justify-center">
       <AnimatePresence>
         {stage === "text" && (
           <motion.div
             key="animated-text"
-            className="text-6xl md:text-7xl font-bold text-gray-800 flex" // フォントサイズを大きく変更
+            className="text-6xl md:text-7xl font-bold text-gray-800 flex"
             initial="hidden"
             animate="visible"
             exit="exit"
